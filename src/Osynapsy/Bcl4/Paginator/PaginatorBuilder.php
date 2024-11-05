@@ -10,7 +10,7 @@ use Osynapsy\Bcl4\ComboBox;
  *
  * @author Pietro Celeste <p.celeste@osynpasy.net>
  */
-class PaginationBuilder
+class PaginatorBuilder
 {
     public static function build(Paginator $pagination)
     {
@@ -18,7 +18,7 @@ class PaginationBuilder
         $container->append([
             new InputHidden($pagination->id, 'BclPaginationCurrentPage'),
             new InputHidden($pagination->id.'OrderBy', 'BclPaginationOrderBy')
-        ]);        
+        ]);
         if ($pagination->showPageDimension()) {
             $container->append([
                 sprintf('<small class="text-nowrap p-2">%s per pagina</small>', $pagination->getEntity()),
@@ -27,15 +27,15 @@ class PaginationBuilder
                     $pagination->getParentComponent(),
                     $pagination('pageDimension')
                 )
-            ]);            
-        }        
+            ]);
+        }
         if ($pagination->showPageInfo()) {
             $container->add(self::labelInfoFactory(
-                $pagination->getMeta(), 
+                $pagination->getMeta(),
                 $pagination->getEntity()
             ));
-        }                
-        $container->add(self::ulFactory(            
+        }
+        $container->add(self::ulFactory(
             $pagination('pageCurrent'),
             $pagination('pageTotal'),
             $pagination->position
@@ -54,7 +54,7 @@ class PaginationBuilder
     protected static function ulFactory($currentPage, $totalPages, $position)
     {
         $dim = min(7, $totalPages);
-        $app = floor($dim / 2);        
+        $app = floor($dim / 2);
         $pageMax = max($dim, min($currentPage + $app, $totalPages));
         $pageMin = min(max(1, $currentPage - $app), $totalPages - $dim + 1);
         $ul = new Tag('ul', null, 'pagination pagination-sm justify-content-'.$position);
@@ -75,18 +75,18 @@ class PaginationBuilder
            ->add($label);
         return $li;
     }
-    
+
     protected static function fieldPageDimensionsFactory($fieldId, $parentComponentId, $pageDimension)
-    {        
+    {
         $Combo = new ComboBox($fieldId);
         $Combo->setPlaceholder(false);
-        $Combo->setSmallSize();        
+        $Combo->setSmallSize();
         $Combo->setValue($pageDimension);
         $Combo->attribute('onchange', "Osynapsy.refreshComponents(['{$parentComponentId}'])");
         $Combo->setDataset(array_map(fn($v) => $v * $pageDimension, [1,2,5,10,20]));
         return $Combo;
     }
-    
+
     public static function getPageDimensionFieldId($paginationId)
     {
         return $paginationId . (strpos($paginationId, '_') ? '_page_dimension' : 'PageDimension');

@@ -4,7 +4,7 @@
     "homepage": "http://www.osynapsy.net/html-bcl4-paginator",
     "type": "library",
     "description": "Osynapsy bs4 pagination implementation",
-    "keywords": ["Osynapsy", "Pagination"],
+    "keywords": ["Osynapsy", "Pagination", "Paginator"],
     "license": "MIT",
     "authors": [
         {

@@ -68,7 +68,7 @@ class Paginator extends AbstractComponent implements PaginatorInterface
         if (!$this->loaded) {
             $this->loadData();
         }
-        $this->add(PaginationBuilder::build($this));
+        $this->add(PaginatorBuilder::build($this));
     }
 
     public function loadData($defaultPage = null)
@@ -131,7 +131,7 @@ class Paginator extends AbstractComponent implements PaginatorInterface
 
     public function setPageDimension($pageDimension)
     {
-        $comboId = PaginationBuilder::getPageDimensionFieldId($this->id);
+        $comboId = PaginatorBuilder::getPageDimensionFieldId($this->id);
         $this->meta['pageDimension'] = $_REQUEST[$comboId] ?? $pageDimension;
     }
 
