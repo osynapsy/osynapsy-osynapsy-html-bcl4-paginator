@@ -1,0 +1,27 @@
+{
+    "name": "osynapsy/osynapsy-html-bcl4-paginator",
+    "version": "1.0",
+    "homepage": "http://www.osynapsy.net/html-bcl4-paginator",
+    "type": "library",
+    "description": "Osynapsy bs4 pagination implementation",
+    "keywords": ["Osynapsy", "Pagination"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pietro Celeste",
+            "email": "p.celeste@osynapsy.net",
+            "homepage": "https://github.com/osynapsy/osynapsy-html-bcl4-paginator/wiki"
+        }
+    ],
+    "require": {
+        "php" : ">=7.2.0",
+        "osynapsy/osynapsy-html-bcl4" : "@stable",
+        "osynapsy/osynapsy-database" : "@stable",
+        "osynapsy/osynapsy-html2" : "1.*"
+    },
+    "autoload" : {
+        "psr-4": {
+            "Osynapsy\\Bcl4\\Paginator\\": "src/Osynapsy/Bcl4/Paginator/"
+        }
+    }
+}
