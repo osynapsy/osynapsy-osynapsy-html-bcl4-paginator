@@ -19,12 +19,13 @@ class PaginatorBuilder
             new InputHidden($pagination->id, 'BclPaginationCurrentPage'),
             new InputHidden($pagination->id.'OrderBy', 'BclPaginationOrderBy')
         ]);
-        if ($pagination->showPageDimension()) {
+        if ($pagination->showPageDimension()) {            
             $container->append([
                 sprintf('<small class="text-nowrap p-2">%s per pagina</small>', $pagination->getEntity()),
                 self::fieldPageDimensionsFactory(
                     self::getPageDimensionFieldId($pagination->id),
                     $pagination->getParentComponent(),
+                    $pagination('defaultPageDimension'),
                     $pagination('pageDimension')
                 )
             ]);
@@ -76,14 +77,14 @@ class PaginatorBuilder
         return $li;
     }
 
-    protected static function fieldPageDimensionsFactory($fieldId, $parentComponentId, $pageDimension)
+    protected static function fieldPageDimensionsFactory($fieldId, $parentComponentId, $defaultPageDimension, $pageDimension)
     {
         $Combo = new ComboBox($fieldId);
         $Combo->setPlaceholder(false);
         $Combo->setSmallSize();
         $Combo->setValue($pageDimension);
         $Combo->attribute('onchange', "Osynapsy.refreshComponents(['{$parentComponentId}'])");
-        $Combo->setDataset(array_map(fn($v) => $v * $pageDimension, [1,2,5,10,20]));
+        $Combo->setDataset(array_map(fn($v) => $v * ($defaultPageDimension ?: $pageDimension), [1,2,5,10,20]));
         return $Combo;
     }
 

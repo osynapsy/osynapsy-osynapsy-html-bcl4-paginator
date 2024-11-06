@@ -35,6 +35,7 @@ class Paginator extends AbstractComponent implements PaginatorInterface
     protected $showPageInfo = true;
     private $meta = [
         //Dimension of the pag in row;
+        'defaultPageDimension' => 10,
         'pageDimension' => 10,
         'pageTotal' => 1,
         'pageCurrent' => 1,
@@ -77,7 +78,7 @@ class Paginator extends AbstractComponent implements PaginatorInterface
         $sort = $this->getSort(filter_input(\INPUT_POST, $this->id.'OrderBy'));
         $pageDimension = $this->meta['pageDimension'];
         $this->data = $this->paginator->get($requestPage, $pageDimension, $sort);
-        $this->meta = $this->paginator->getAllMeta();
+        $this->meta = array_merge($this->meta, $this->paginator->getAllMeta());
         $this->loaded = true;
         return $this->data;
     }
@@ -131,8 +132,9 @@ class Paginator extends AbstractComponent implements PaginatorInterface
 
     public function setPageDimension($pageDimension)
     {
-        $comboId = PaginatorBuilder::getPageDimensionFieldId($this->id);
-        $this->meta['pageDimension'] = $_REQUEST[$comboId] ?? $pageDimension;
+        $comboId = PaginatorBuilder::getPageDimensionFieldId($this->id);        
+        $this->meta['defaultPageDimension'] = $pageDimension;
+        $this->meta['pageDimension'] = $_REQUEST[$comboId] ?? $pageDimension;        
     }
 
     public function setParentComponent($componentId)
